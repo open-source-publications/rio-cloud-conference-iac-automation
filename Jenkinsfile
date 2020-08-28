@@ -77,7 +77,7 @@ pipeline{
         stage("Ansible") {
             agent {
                 node {
-                    label "jenkins-slave-ansible"
+                    label "jenkins-slave-ansible-devel"
                 }
             }
             when {
