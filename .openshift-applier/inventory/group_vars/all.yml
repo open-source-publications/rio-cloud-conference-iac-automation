@@ -23,7 +23,7 @@ deploy:
   test:
     AUTOMATION_NAMESPACE: '{{ automation_namespace }}'
     NAME: '{{ app_name }}'
-    NAMESPACE: '{{ hom_namespace }}'
+    NAMESPACE: '{{ test_namespace }}'
     DEPLOYER_USER: jenkins
     NODE_ENV: test
     TZ: America/Sao_Paulo
