@@ -8,23 +8,11 @@ pipeline{
     environment {
         // Global Vars
         NAMESPACE_PREFIX="conference"
-        GIT_DOMAIN = ""
-        GIT_ORG = ""
-
-        PIPELINES_NAMESPACE = "${NAMESPACE_PREFIX}-ci-cd"
-        APP_NAME = ""
-
+        
         JENKINS_TAG = "${JOB_NAME}.${BUILD_NUMBER}".replace("/", "-")
         JOB_NAME = "${JOB_NAME}".replace("/", "-")
 
         GIT_SSL_NO_VERIFY = true
-
-        DISPLAY = 0
-
-        pom = readMavenPom file: 'pom.xml'
-
-        ARTIFACTID = pom.getArtifactId();
-        VERSION = pom.getVersion();
 
         RELEASE = false
     }
