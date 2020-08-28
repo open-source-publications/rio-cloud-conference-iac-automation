@@ -1,0 +1,63 @@
+---
+app_name: java-app
+
+# variables that will be passed to the template of build
+build:
+  NAME: '{{ app_name }}'
+  IMAGE_STREAM_SOURCE_NAME: openjdk-8-rhel8
+  IMAGE_STREAM_SOURCE_TAG: 1.1
+
+# variables that will be passed to the template of deploy
+deploy:
+
+  # Variables of development environment
+  dev:
+    AUTOMATION_NAMESPACE: '{{ automation_namespace }}'
+    NAME: '{{ app_name }}'
+    NAMESPACE: '{{ dev_namespace }}'
+    DEPLOYER_USER: jenkins
+    NODE_ENV: dev
+    TZ: America/Sao_Paulo
+
+  # Variables of homologation environment
+  test:
+    AUTOMATION_NAMESPACE: '{{ automation_namespace }}'
+    NAME: '{{ app_name }}'
+    NAMESPACE: '{{ hom_namespace }}'
+    DEPLOYER_USER: jenkins
+    NODE_ENV: test
+    TZ: America/Sao_Paulo
+
+# Creation contnts of cluster
+openshift_cluster_content:
+  # deploy template of build
+  - object: app-builds
+    content:
+      - name: '{{ app_name }}-build'
+        template: '{{ playbook_dir }}/templates/{{ app_name }}-build.yml'
+        params_from_vars: '{{ build }}'
+        namespace: '{{ automation_namespace }}'
+        tags:
+        - build
+
+  # deploy development environment
+  - object: deploy-dev
+    content:
+      - name: '{{ app_name }}'
+        template: '{{ playbook_dir }}/templates/{{ app_name }}-deploy.yml'
+        params_from_vars: '{{ deploy.dev }}'
+        namespace: '{{ dev_namespace }}'
+        tags:
+          - deploy
+          - dev
+
+  # deploy homologation environment
+  - object: deploy-test
+    content:
+      - name: '{{ app_name }}'
+        template: '{{ playbook_dir }}/templates/{{ app_name }}-deploy.yml'
+        params_from_vars: '{{ deploy.test }}'
+        namespace: '{{ test_namespace }}'
+        tags:
+          - deploy
+          - test

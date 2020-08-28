@@ -1,0 +1,11 @@
+---
+- name: Build and Deploy Java Application
+  hosts: app
+  vars:
+    namespace_prefix: 'conference'
+    automation_namespace: 'conference-ci-cd'
+    dev_namespace: '{{ namespace_prefix }}-dev'
+    test_namespace: '{{ namespace_prefix }}-test'
+  tasks:
+    - include_role:
+        name: openshift-applier/roles/openshift-applier
