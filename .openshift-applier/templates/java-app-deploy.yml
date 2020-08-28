@@ -27,9 +27,6 @@ objects:
         tier: '${TIER}'
         customer-facing: '${CUSTOMER_FACING}'
         app-role: '${APP_ROLE}'
-        ci-commit-sha: '${CI_COMMIT_SHA}'
-        ci-pipeline-iid: '${CI_PIPELINE_IID}'
-        ci-pipeline-id: '${CI_PIPELINE_ID}'
     spec:
       replicas: 1
       selector:
