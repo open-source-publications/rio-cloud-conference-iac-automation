@@ -122,6 +122,20 @@ objects:
         weight: 100
       wildcardPolicy: None
   - apiVersion: v1
+    kind: Route
+    metadata:
+      labels:
+        name: '${NAME}-health'
+      name: '${NAME}-health'
+    spec:
+      port:
+        targetPort: 8081-tcp
+      to:
+        kind: Service
+        name: '${NAME}'
+        weight: 100
+      wildcardPolicy: None
+  - apiVersion: v1
     kind: RoleBinding
     metadata:
       name: edit
